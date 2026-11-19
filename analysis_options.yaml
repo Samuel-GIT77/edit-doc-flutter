@@ -1,0 +1,6 @@
+# Configuração de linter para o projeto
+linter:
+  rules:
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    avoid_print: false
