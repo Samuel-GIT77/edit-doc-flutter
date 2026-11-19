@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📝 Editor de Documentos Flutter (`edit-doc-flutter`)
 
 Projeto de aplicação multiplataforma desenvolvido em **Flutter** estruturado rigorosamente sob o padrão de arquitetura **MVVM (Model-View-ViewModel)** com persistência local (`shared_preferences`) e container Linux configurado para execução via **GitHub Codespaces**.
@@ -109,3 +110,6 @@ Para economizar a cota gratuita mensal de 60 horas do GitHub Codespaces:
    git push
    ```
 2. Acesse [github.com/codespaces](https://github.com/codespaces) e clique em **...** > **Stop Codespace**.
+=======
+# edit-doc-flutter
+>>>>>>> a8a8917b6114e81fd62cef6643d878127091d5ed
