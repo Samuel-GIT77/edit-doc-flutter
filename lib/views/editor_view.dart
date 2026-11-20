@@ -83,8 +83,7 @@ class _EditorViewState extends State<EditorView> {
         );
         Navigator.pop(context);
       } else {
-        final erro =
-            widget.documentosViewModel.mensagemErro ??
+        final erro = widget.documentosViewModel.mensagemErro ??
             'Falha ao salvar documento.';
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(erro), backgroundColor: Colors.redAccent),

@@ -16,8 +16,8 @@ class AuthViewModel extends ChangeNotifier {
   AuthViewModel({
     required BancoLocalService bancoService,
     required PreferencesService prefsService,
-  }) : _bancoService = bancoService,
-       _prefsService = prefsService;
+  })  : _bancoService = bancoService,
+        _prefsService = prefsService;
 
   Usuario? get usuarioAtual => _usuarioAtual;
   bool get isAutenticado => _usuarioAtual != null;

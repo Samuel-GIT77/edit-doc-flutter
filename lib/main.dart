@@ -54,9 +54,8 @@ class EditDocApp extends StatelessWidget {
         return MaterialApp(
           title: 'Editor de Docs',
           debugShowCheckedModeBanner: false,
-          themeMode: authViewModel.isDarkTheme
-              ? ThemeMode.dark
-              : ThemeMode.light,
+          themeMode:
+              authViewModel.isDarkTheme ? ThemeMode.dark : ThemeMode.light,
           theme: ThemeData(
             useMaterial3: true,
             colorScheme: ColorScheme.fromSeed(
@@ -89,13 +88,13 @@ class EditDocApp extends StatelessWidget {
             '/cadastro': (context) =>
                 CadastroView(authViewModel: authViewModel),
             '/home': (context) => HomeView(
-              authViewModel: authViewModel,
-              documentosViewModel: documentosViewModel,
-            ),
+                  authViewModel: authViewModel,
+                  documentosViewModel: documentosViewModel,
+                ),
             '/editor': (context) => EditorView(
-              authViewModel: authViewModel,
-              documentosViewModel: documentosViewModel,
-            ),
+                  authViewModel: authViewModel,
+                  documentosViewModel: documentosViewModel,
+                ),
           },
         );
       },

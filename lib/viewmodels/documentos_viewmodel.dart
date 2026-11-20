@@ -12,7 +12,7 @@ class DocumentosViewModel extends ChangeNotifier {
   String? _autorEmailAtual;
 
   DocumentosViewModel({required BancoLocalService bancoService})
-    : _bancoService = bancoService;
+      : _bancoService = bancoService;
 
   List<Documento> get documentos => List.unmodifiable(_documentos);
   bool get isLoading => _isLoading;

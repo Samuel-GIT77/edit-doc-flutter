@@ -31,7 +31,8 @@ class BancoLocalService {
     Documento(
       id: 'doc-2',
       titulo: 'Plano de Estudos Flutter',
-      conteudo: '1. Model-View-ViewModel\n2. ChangeNotifier e ListenableBuilder\n3. Rotas Nomeadas\n4. Persistência Local',
+      conteudo:
+          '1. Model-View-ViewModel\n2. ChangeNotifier e ListenableBuilder\n3. Rotas Nomeadas\n4. Persistência Local',
       dataModificacao: DateTime.now().subtract(const Duration(minutes: 30)),
       autorEmail: 'admin@exemplo.com',
     ),

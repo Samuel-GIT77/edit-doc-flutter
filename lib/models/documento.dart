@@ -30,7 +30,7 @@ class Documento {
       conteudo: map['conteudo'] as String? ?? '',
       dataModificacao: map['dataModificacao'] != null
           ? DateTime.tryParse(map['dataModificacao'] as String) ??
-                DateTime.now()
+              DateTime.now()
           : DateTime.now(),
       autorEmail: map['autorEmail'] as String? ?? '',
     );
