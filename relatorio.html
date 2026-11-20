@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatório Técnico de Migração Arquitetural (MVVM) - Flutter</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 18mm 18mm 18mm;
+    }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      line-height: 1.5;
+      font-size: 10pt;
+      margin: 0;
+      padding: 0;
+    }
+    .header {
+      border-bottom: 2px solid #2563eb;
+      padding-bottom: 12px;
+      margin-bottom: 20px;
+    }
+    .badge {
+      display: inline-block;
+      background-color: #dbeafe;
+      color: #1d4ed8;
+      font-size: 8pt;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+    }
+    h1 {
+      font-size: 18pt;
+      color: #0f172a;
+      margin: 4px 0 8px 0;
+      font-weight: 700;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
+      font-size: 8.5pt;
+      color: #475569;
+      margin-top: 8px;
+    }
+    .meta-grid strong {
+      color: #1e293b;
+    }
+    h2 {
+      font-size: 12pt;
+      color: #1e3a8a;
+      border-left: 4px solid #2563eb;
+      padding-left: 8px;
+      margin-top: 18px;
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-size: 10.5pt;
+      color: #0f172a;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+    p {
+      margin: 6px 0;
+      text-align: justify;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 8pt;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 6px 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      font-weight: 700;
+    }
+    tr:nth-child(even) {
+      background-color: #f8fafc;
+    }
+    .tag {
+      display: inline-block;
+      font-weight: 600;
+      padding: 1px 5px;
+      border-radius: 3px;
+      font-size: 7.5pt;
+    }
+    .tag-model { background: #e0e7ff; color: #3730a3; }
+    .tag-vm { background: #fef3c7; color: #92400e; }
+    .tag-view { background: #dcfce7; color: #166534; }
+    .tag-utils { background: #f3e8ff; color: #6b21a8; }
+    .tag-config { background: #fee2e2; color: #991b1b; }
+    code {
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 8.5pt;
+      background-color: #f1f5f9;
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: #0f172a;
+    }
+    pre {
+      background-color: #0f172a;
+      color: #f8fafc;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 8pt;
+      font-family: 'Consolas', 'Courier New', monospace;
+      overflow-x: auto;
+      margin: 8px 0;
+    }
+    pre code {
+      background-color: transparent;
+      color: inherit;
+      padding: 0;
+    }
+    .box-info {
+      background-color: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 8px 12px;
+      margin: 10px 0;
+      border-radius: 0 4px 4px 0;
+      font-size: 8.5pt;
+    }
+    .diagram {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 10px;
+      margin: 12px 0;
+      text-align: center;
+      font-family: 'Consolas', monospace;
+      font-size: 8pt;
+      white-space: pre;
+      line-height: 1.3;
+    }
+    .page-break {
+      page-break-before: always;
+    }
+    .footer {
+      margin-top: 20px;
+      border-top: 1px solid #e2e8f0;
+      padding-top: 8px;
+      font-size: 8pt;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <span class="badge">Relatório Técnico Obrigatório — Fase 1</span>
+    <h1>Migração Arquitetural para MVVM em Flutter</h1>
+    <div class="meta-grid">
+      <div><strong>Projeto:</strong> Editor de Documentos (<code>edit_doc_flutter</code>)</div>
+      <div><strong>Arquitetura:</strong> Model-View-ViewModel (MVVM)</div>
+      <div><strong>Ambiente:</strong> Linux Container / Flutter SDK / GitHub Codespaces</div>
+      <div><strong>Data de Emissão:</strong> 19 de Novembro de 2026</div>
+    </div>
+  </div>
+
+  <div class="box-info">
+    <strong>Resumo Executivo:</strong> Este documento formaliza a migração completa do código monolítico original (desenvolvido no DartPad) para uma arquitetura robusta em camadas no Flutter. As telas de Login, Cadastro e Listagem/Home foram desacopladas em <strong>Model</strong>, <strong>View</strong>, <strong>ViewModel</strong> e <strong>Utils</strong>, eliminando o uso de <code>setState()</code> nas regras de negócio e adotando reatividade cirúrgica com <code>ChangeNotifier</code> e <code>ListenableBuilder</code>.
+  </div>
+
+  <h2>1. Mapeamento de Classes e Widgets</h2>
+  <p>A tabela abaixo detalha a transição do arquivo único para a estrutura modular do Flutter:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 20%;">Elemento Original (DartPad)</th>
+        <th style="width: 28%;">Novo Caminho no Projeto</th>
+        <th style="width: 14%;">Camada MVVM</th>
+        <th style="width: 38%;">Responsabilidade e Adaptações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>class Usuario</code></td>
+        <td><code>lib/models/usuario.dart</code></td>
+        <td><span class="tag tag-model">Model</span></td>
+        <td>Entidade de domínio com atributos <code>id</code>, <code>nome</code>, <code>email</code>, <code>senha</code>, métodos <code>toMap()</code>/<code>fromMap()</code> e <code>copyWith()</code>.</td>
+      </tr>
+      <tr>
+        <td><code>class Documento</code></td>
+        <td><code>lib/models/documento.dart</code></td>
+        <td><span class="tag tag-model">Model</span></td>
+        <td>Entidade representativa de documento (<code>id</code>, <code>titulo</code>, <code>conteudo</code>, <code>dataModificacao</code>, <code>autorEmail</code>).</td>
+      </tr>
+      <tr>
+        <td>Configurações e Tema</td>
+        <td><code>lib/models/services/preferences_service.dart</code></td>
+        <td><span class="tag tag-model">Model (Service)</span></td>
+        <td>Persistência do tema claro/escuro e e-mail do usuário logado via <code>shared_preferences</code>.</td>
+      </tr>
+      <tr>
+        <td>Listas globais / Mocks</td>
+        <td><code>lib/models/services/banco_local_service.dart</code></td>
+        <td><span class="tag tag-model">Model (Service)</span></td>
+        <td>Operações de CRUD assíncronas para usuários e documentos com persistência local.</td>
+      </tr>
+      <tr>
+        <td>Funções de Validação soltas</td>
+        <td><code>lib/utils/validadores.dart</code></td>
+        <td><span class="tag tag-utils">Utils</span></td>
+        <td>Métodos estáticos puros para validação de Nome, E-mail, Senha, Confirmação e Título.</td>
+      </tr>
+      <tr>
+        <td>Lógica de Login e Sessão</td>
+        <td><code>lib/viewmodels/auth_viewmodel.dart</code></td>
+        <td><span class="tag tag-vm">ViewModel</span></td>
+        <td>Controle de autenticação, cadastro, usuário ativo, carregamento e tema herdando de <code>ChangeNotifier</code>.</td>
+      </tr>
+      <tr>
+        <td>Lógica de Documentos</td>
+        <td><code>lib/viewmodels/documentos_viewmodel.dart</code></td>
+        <td><span class="tag tag-vm">ViewModel</span></td>
+        <td>Gerenciamento da lista de documentos, estados de <code>isLoading</code>, salvar e excluir via <code>ChangeNotifier</code>.</td>
+      </tr>
+      <tr>
+        <td>Tela de Login (DartPad)</td>
+        <td><code>lib/views/login_view.dart</code></td>
+        <td><span class="tag tag-view">View</span></td>
+        <td>Interface da rota <code>/</code>. Consome <code>AuthViewModel</code> via <code>ListenableBuilder</code> e delega login.</td>
+      </tr>
+      <tr>
+        <td>Tela de Cadastro (DartPad)</td>
+        <td><code>lib/views/cadastro_view.dart</code></td>
+        <td><span class="tag tag-view">View</span></td>
+        <td>Interface da rota <code>/cadastro</code>. Formulário com validações e delegação de cadastro ao ViewModel.</td>
+      </tr>
+      <tr>
+        <td>Tela Home / Lista (DartPad)</td>
+        <td><code>lib/views/home_view.dart</code></td>
+        <td><span class="tag tag-view">View</span></td>
+        <td>Interface da rota <code>/home</code>. Listagem reativa, diálogo de confirmação e ações de tema e logout.</td>
+      </tr>
+      <tr>
+        <td>Tela de Edição / Novo Doc</td>
+        <td><code>lib/views/editor_view.dart</code></td>
+        <td><span class="tag tag-view">View</span></td>
+        <td>Interface da rota <code>/editor</code>. Formulário com validações e salvamento reativo.</td>
+      </tr>
+      <tr>
+        <td><code>main()</code> e <code>MaterialApp</code></td>
+        <td><code>lib/main.dart</code></td>
+        <td><span class="tag tag-config">Entry Point</span></td>
+        <td>Inicialização assíncrona, injeção de dependências, tema reativo global e rotas nomeadas.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="page-break"></div>
+
+  <h2>2. Alterações de Estrutura e Imports</h2>
+  <p>Ao converter o código contido em um único arquivo de script no DartPad para uma aplicação estruturada em múltiplos arquivos, quatro grandes transformações foram aplicadas:</p>
+
+  <h3>2.1. Organização de Imports e Quebra de Acoplamento Circular</h3>
+  <p>No DartPad, todas as classes coexistiam em um único espaço global sem necessidade de declarações <code>import</code>. Na arquitetura MVVM, cada arquivo declara suas dependências estritas seguindo o princípio da dependência unidirecional:</p>
+  <ul>
+    <li><strong>Views:</strong> Importam apenas seus respectivos ViewModels, modelos necessários e validadores.</li>
+    <li><strong>ViewModels:</strong> Importam a camada Model (entidades e serviços) e o pacote <code>package:flutter/foundation.dart</code>.</li>
+    <li><strong>Models/Services:</strong> Não importam ViewModels nem Views, garantindo total independência do framework visual.</li>
+  </ul>
+
+  <h3>2.2. Encapsulamento e Visibilidade de Atributos</h3>
+  <p>No código original, variáveis de estado eram públicas ou manipuladas diretamente nas telas. Na nova arquitetura, todos os estados internos foram privatizados com o prefixo <code>_</code> (ex: <code>_usuarioAtual</code>, <code>_documentos</code>, <code>_isLoading</code>, <code>_isDarkTheme</code>) e expostos apenas via <em>getters</em> públicos de leitura:</p>
+  <pre><code>// lib/viewmodels/documentos_viewmodel.dart
+List&lt;Documento&gt; _documentos = [];
+List&lt;Documento&gt; get documentos => List.unmodifiable(_documentos); // Protege contra mutação direta</code></pre>
+
+  <h3>2.3. Injeção de Dependências e Construtores Parametrizados</h3>
+  <p>Variáveis globais foram substituídas por injeção explícita via construtor. Isso permite desacoplamento total, facilidade de manutenção e viabilidade de testes unitários com dados simulados:</p>
+  <pre><code>// lib/viewmodels/auth_viewmodel.dart
+AuthViewModel({
+  required BancoLocalService bancoService,
+  required PreferencesService prefsService,
+}) : _bancoService = bancoService, _prefsService = prefsService;</code></pre>
+
+  <h3>2.4. Centralização de Rotas Nomeadas</h3>
+  <p>A navegação antes acoplada (feita por <code>Navigator.push(context, MaterialPageRoute(...))</code> com chamadas diretas aos construtores das telas) foi substituída por uma tabela centralizada de rotas nomeadas no <code>lib/main.dart</code>: <code>'/'</code> (Login), <code>'/cadastro'</code>, <code>'/home'</code> e <code>'/editor'</code>.</p>
+
+  <h2>3. Mudanças no Gerenciamento de Estado</h2>
+
+  <h3>3.1. Eliminação do <code>setState()</code> para Regras de Negócio</h3>
+  <p>No DartPad, cada tela continha métodos assíncronos e executava chamadas manuais como <code>setState(() { carregando = true; })</code>. Ao migrar para o MVVM:</p>
+  <ul>
+    <li>As <strong>Views tornaram-se passivas</strong>: elas apenas reagem a estados notificados e despacham intenções do usuário.</li>
+    <li>O uso de <code>setState()</code> nas Views foi restrito estritamente a comportamentos visuais efêmeros locais (ex.: alternar a visibilidade de senha <code>_senhaOculta = !_senhaOculta</code>).</li>
+  </ul>
+
+  <h3>3.2. Padrão Observador com <code>ChangeNotifier</code> e <code>notifyListeners()</code></h3>
+  <p>Toda a manipulação de dados, chamadas de persistência e estados de carregamento residem nos ViewModels. Sempre que o estado é alterado, o método <code>notifyListeners()</code> é disparado:</p>
+  <pre><code>// Exemplo no AuthViewModel:
+Future&lt;bool&gt; login(String email, String senha) async {
+  _isLoading = true;
+  _mensagemErro = null;
+  notifyListeners(); // Notifica a View para desenhar o spinner de progresso
+
+  try {
+    final usuario = await _bancoService.autenticar(email, senha);
+    if (usuario != null) {
+      _usuarioAtual = usuario;
+      _isLoading = false;
+      notifyListeners(); // Notifica a View com sucesso
+      return true;
+    }
+  } catch (e) {
+    _mensagemErro = 'Falha ao autenticar.';
+  }
+  _isLoading = false;
+  notifyListeners(); // Notifica a View com o erro
+  return false;
+}</code></pre>
+
+  <h3>3.3. Reatividade Cirúrgica com <code>ListenableBuilder</code></h3>
+  <p>Em vez de reconstruir a tela inteira quando o estado muda, as Views e o aplicativo raiz utilizam o widget nativo <code>ListenableBuilder</code>. Apenas o botão ou bloco afetado é redesenhado, aumentando drasticamente o desempenho e a legibilidade:</p>
+  <pre><code>ListenableBuilder(
+  listenable: widget.authViewModel,
+  builder: (context, _) {
+    final carregando = widget.authViewModel.isLoading;
+    return ElevatedButton(
+      onPressed: carregando ? null : _fazerLogin,
+      child: carregando ? CircularProgressIndicator() : Text('Entrar'),
+    );
+  },
+)</code></pre>
+
+  <h2>4. Diagrama da Arquitetura MVVM</h2>
+  <div class="diagram">
++--------------------------------------------------------------------------+
+|                             CAMADA VIEW                                  |
+|   LoginView (/)     CadastroView (/cadastro)     HomeView (/home)        |
++--------------------------------------------------------------------------+
+          | (Aciona login/cadastro)                  | (Aciona CRUD docs)
+          v                                          v
++--------------------------------------------------------------------------+
+|                          CAMADA VIEWMODEL                                |
+|   AuthViewModel (ChangeNotifier)    DocumentosViewModel (ChangeNotifier) |
+|         ^                                                 ^              |
+|         | notifyListeners()                               |              |
++---------|-------------------------------------------------|--------------+
+          | (ListenableBuilder escuta e atualiza a UI)      |
+          v                                                 v
++--------------------------------------------------------------------------+
+|                          CAMADA MODEL / SERVICES                         |
+|   PreferencesService (shared_preferences)   BancoLocalService (CRUD)     |
+|   Usuario (Entidade de Dados)               Documento (Entidade)         |
++--------------------------------------------------------------------------+
+  </div>
+
+  <h2>5. Instruções para Validação e Entrega</h2>
+  <div class="box-info">
+    <strong>Link do Repositório:</strong> Submeta no Blackboard o endereço do repositório público criado no GitHub contendo este relatório e o código funcionando.<br>
+    <strong>Acesso de Teste Pré-Configurado:</strong> E-mail: <code>admin@exemplo.com</code> | Senha: <code>123456</code>.
+  </div>
+
+  <div class="footer">
+    <span>Editor de Documentos Flutter — Relatório de Migração MVVM</span>
+    <span>Página 2 de 2</span>
+  </div>
+
+</body>
+</html>
