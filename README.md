@@ -13,7 +13,9 @@ A aplicação segue a separação estrita de responsabilidades:
 * **View (`lib/views/`):** Telas declarativas e reativas via `ListenableBuilder` (`LoginView`, `CadastroView`, `HomeView`, `EditorView`).
 * **Utils (`lib/utils/`):** Funções utilitárias de validação (`Validadores`).
 
-> 📄 **Relatório Técnico Completo da Migração:** Consulte o arquivo [ARQUITETURA.md](ARQUITETURA.md) para a análise detalhada do mapeamento de classes, alterações de estrutura/imports e gerenciamento de estado sem `setState()`.
+> 📄 **Relatório Técnico Completo da Migração:**
+> * Versão Markdown: [ARQUITETURA.md](ARQUITETURA.md)
+> * Versão PDF diagramada: [RELATORIO_ARQUITETURA.pdf](RELATORIO_ARQUITETURA.pdf)
 
 ---
 
